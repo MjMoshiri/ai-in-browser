@@ -11,9 +11,15 @@ chrome.runtime.onInstalled.addListener(() => {
 chrome.contextMenus.onClicked.addListener((info, tab) => {
     if (info.menuItemId === "grammarCorrect") {
         chrome.storage.local.get('apiKey', data => {
-            correctGrammar(info.selectionText, tab.id, data.apiKey).catch(error => {
-                // TODO : Handle error
-            });
+            if (!data.apiKey) {
+                chrome.tabs.sendMessage(tab.id, { action: "requireApiKey" }).catch(error => {
+                    // TODO : Handle error
+                });
+            } else {
+                correctGrammar(info.selectionText, tab.id, data.apiKey).catch(error => {
+                    // TODO : Handle error
+                });
+            }
         });
     }
 });
@@ -27,7 +33,7 @@ async function correctGrammar(text, tabId, apiKey) {
     const messages = [
         {
             role: "system",
-            content: "You are a highly skilled grammar correction assistant. Your task is to correct any grammatical errors, improve sentence structure, and ensure the text is clear and concise."
+            content: "You are a highly skilled grammar correction assistant. Your task is to correct any grammatical errors, enhance sentence structure, and ensure the text is clear and concise. Return only the corrected text. reply with the corrected text without any additional information or qutations."
         },
         {
             role: "user",
