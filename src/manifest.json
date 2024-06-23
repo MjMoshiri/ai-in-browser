@@ -10,7 +10,7 @@
         "storage"
     ],
     "background": {
-        "service_worker": "bundle.js"
+        "service_worker": "background.js"
     },
     "content_scripts": [
         {

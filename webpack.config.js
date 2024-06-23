@@ -1,18 +1,18 @@
 const path = require('path');
 
 module.exports = {
-  entry: './background.js', // Path to your main JavaScript file
+  entry: './src/background.js',
   output: {
-    path: path.resolve(__dirname, 'lib'),
-    filename: 'bundle.js' // Output bundle file name
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'background.js' 
   },
   module: {
     rules: [
       {
-        test: /\.js$/, // Apply this rule to all JavaScript files
-        exclude: /node_modules/, // Do not transpile node_modules
+        test: /\.js$/,
+        exclude: /node_modules/, 
         use: {
-          loader: 'babel-loader', // Use babel-loader to use Babel with Webpack
+          loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env']
           }
