@@ -23,10 +23,10 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
         });
     }
 });
-
+const Model = 'meta-llama/Meta-Llama-3-70B-Instruct';
 async function correctGrammar(text, tabId, apiKey) {
     const client = new OpenAI({
-        baseURL: "https://api-inference.huggingface.co/models/CohereForAI/c4ai-command-r-plus/v1/",
+        baseURL: "https://api-inference.huggingface.co/models/" + Model + "/v1/",
         apiKey
     });
 
@@ -42,7 +42,7 @@ async function correctGrammar(text, tabId, apiKey) {
     ];
 
     const response = await client.chat.completions.create({
-        model: "CohereForAI/c4ai-command-r-plus",
+        model: Model,
         messages,
         max_tokens: text.length * 2
     });
